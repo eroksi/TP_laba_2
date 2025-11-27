@@ -12,11 +12,18 @@ Aeroflot::Aeroflot(string end_point, int num, string type){
     type_aeroplane = type;
 }
 
+Aeroflot::Aeroflot(const Aeroflot& other){
+    destination = other.destination;
+    flight_number = other.flight_number;
+    type_aeroplane = other.type_aeroplane;
+
+}
+
 Aeroflot::~Aeroflot(){
     cout << "Hero destructor called for the flight number: " << getFlightNumber() << endl;
 }
 
-int Aeroflot::getFlightNumber(){
+int Aeroflot::getFlightNumber() const{
     return flight_number;
 }
 
