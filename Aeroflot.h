@@ -1,5 +1,4 @@
-#ifndef aeroflot_h
-#define aeroflot_h
+#pragma once 
 
 #include <iostream>
 #include <string>
@@ -23,7 +22,7 @@ class Aeroflot{
         void print() const;
 
         string getDestination() const;
-        int getFlightNumber();
+        int getFlightNumber() const;
         string getTypePlane() const;
 
         void setDestination(string end_point);
@@ -36,4 +35,3 @@ class Aeroflot{
 
 };
 
-#endif
