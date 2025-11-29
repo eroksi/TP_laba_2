@@ -17,6 +17,7 @@ class Aeroflot{
             int flight_number,
             string type_aeroplane
         );
+        Aeroflot(const Aeroflot& other);
         ~Aeroflot();
 
         void print() const;

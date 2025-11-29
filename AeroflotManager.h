@@ -15,11 +15,13 @@ class AeroflotManager{
         AeroflotManager();
         ~AeroflotManager();
         void addFlight();
-        void sortByDestination();
+        void sortByDestination() const;
         void findFlightByType()  const;
         void findFlightByNumber()  const;
         void findFlightByDestination()  const;
         void showAllFlights() const;
         void resize();
+        void removeFlight();
+
 
 };

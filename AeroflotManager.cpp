@@ -9,7 +9,7 @@ AeroflotManager::AeroflotManager(){
 }
 
 AeroflotManager::~AeroflotManager(){
-    cout << "Hero destructor called for Aeroflot Manager system" << endl;
+    cout << "Aeroflot Manager destructor called for Aeroflot Manager system" << endl;
     delete[] flights;
     flights = nullptr;
 }
@@ -20,27 +20,28 @@ void AeroflotManager::addFlight(){
             resize();
         }
 
-        Aeroflot newFlight;
+        string dest, type_p;
 
         cout << "Adding new flight" << endl;
-        cin >> newFlight;
+        cout << "Enter the destination: ";
+        getline(cin, dest);
 
-        if (newFlight.getFlightNumber() < 0){
-            throw invalid_argument("Error: Number of flight must be pozitive");
-        }
+        cout << "Enter the type of plane: ";
+        getline(cin, type_p);
 
-        if (newFlight.getDestination().empty()){
+        if (dest.empty()){
             throw invalid_argument("Error: Destination cant be empty");
         }
 
-        if (newFlight.getTypePlane().empty()){
+        if (type_p.empty()){
             throw invalid_argument("Error: Plane type cant be empty");
         }
+
+        Aeroflot newFlight(dest, size + 1, type_p);
 
         flights[size] = newFlight;
         size++;
 
-        sortByDestination();
 
         cout << "Flight is saved!!" << endl;
         }
@@ -59,26 +60,26 @@ void AeroflotManager::addFlight(){
 void AeroflotManager::resize(){
 
     try{
-    int newCapacity = capacity * 2;
-    Aeroflot* newFlights = new Aeroflot[newCapacity];
+        int newCapacity = capacity * 2;
+        Aeroflot* newFlights = new Aeroflot[newCapacity];
 
-    for (int i = 0; i < size; i++){
-        newFlights[i] = flights[i];
+        for (int i = 0; i < size; i++){
+            newFlights[i] = flights[i];
+        }
+
+        delete[] flights;
+
+        flights = newFlights;
+        capacity = newCapacity;
     }
 
-    delete[] flights;
-
-    flights = newFlights;
-    capacity = newCapacity;
-}
-
-catch(const bad_alloc& e){
-    throw runtime_error("Error of increasing massive");
-}
-}
+    catch(const bad_alloc& e){
+        throw runtime_error("Error of increasing massive");
+    }
+    }
 
 
-void AeroflotManager::sortByDestination() {
+void AeroflotManager::sortByDestination() const {
     for (int i = 0; i < size - 1; i++) {
         for (int j = 0; j < size - i - 1; j++) {
             if (flights[j].getDestination() > flights[j + 1].getDestination()) {
@@ -95,8 +96,10 @@ void AeroflotManager::showAllFlights() const {
         cout << "There is no flights" << endl;
         return;
     }
+
+    sortByDestination();
     
-    cout << "ALL FLIGHTS" << endl;
+    cout << "ALL FLIGHTS:" << endl;
     for (int i = 0; i < size; i++) {
         cout << (i + 1) << ". " << flights[i];
     }
@@ -111,7 +114,6 @@ void AeroflotManager::findFlightByType() const {
     
     string searchType;
     cout << "Enter the type of plane: ";
-    cin.ignore();
     getline(cin, searchType);
     
     bool found = false;
@@ -164,7 +166,6 @@ void AeroflotManager::findFlightByDestination() const {
     
     string searchDest;
     cout << "Enter destination for search: ";
-    cin.ignore();
     getline(cin, searchDest);
     
     bool found = false;
@@ -179,5 +180,31 @@ void AeroflotManager::findFlightByDestination() const {
     
     if (!found) {
         cout << "Flights to destination '" << searchDest << "' not found." << endl;
+    }
+}
+
+void AeroflotManager::removeFlight(){
+    if (size == 0){
+        cout << "No flight to remove" << endl;
+        return;
+    }
+
+    int flightNumber;
+    cout << "Enter flight number to remove: ";
+    cin >> flightNumber;
+
+    bool found = false;
+
+    for (int i = 0; i < size; i ++){
+        if (flights[i].getFlightNumber() == flightNumber){
+            for (int j = i; j < size - 1; j++){
+                flights[j] = flights[j + 1];
+            }
+
+            size--;
+            found = true;
+            cout << "Flight " << flightNumber << " successfully removed." << endl;
+            break;
+        }
     }
 }

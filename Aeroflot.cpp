@@ -2,7 +2,7 @@
 
 Aeroflot::Aeroflot(){
     destination = "Unknown";
-    flight_number = -1;
+    flight_number = 0;
     type_aeroplane = "Unknown";
 }
 
@@ -20,7 +20,7 @@ Aeroflot::Aeroflot(const Aeroflot& other){
 }
 
 Aeroflot::~Aeroflot(){
-    cout << "Hero destructor called for the flight number: " << getFlightNumber() << endl;
+    cout << "Aeroflot destructor called for the flight number: " << getFlightNumber() << endl;
 }
 
 int Aeroflot::getFlightNumber() const{
@@ -71,6 +71,6 @@ istream& operator>>(istream& in, Aeroflot& aero){
 }
 
 ostream& operator<<(ostream& out, const Aeroflot& aero){
-    out << "Flight: " << aero.flight_number << " to " << aero.destination << " (Plane: " << aero.type_aeroplane << ")" << endl;
+    out << "Flight " << aero.flight_number << " to " << aero.destination << " (Plane: " << aero.type_aeroplane << ")" << endl;
     return out;
 }
